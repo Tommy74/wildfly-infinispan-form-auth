@@ -2,5 +2,5 @@ infinispan-server-*
 jboss-eap-*
 redhat-datagrid-*
 *.cli
-wildfly-*
+wildfly-40*
 form-auth-webapp/target

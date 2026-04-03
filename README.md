@@ -2,7 +2,18 @@
 
 This project sets up a **2-node WildFly/JBoss EAP cluster** with a **2-node Infinispan/Data Grid cluster** as an external session store, using **Form-based authentication** and **Single Sign-On (SSO)** without TLS.
 
-WildFly connects to Infinispan via the HotRod protocol and caches SSO data into Infinispan (WildFly configures `single-sign-on-management` using `hotrod-single-sign-on-management` to store SSO data into a `remote-cache-container` backed by Infinispan).
+WildFly connects to Infinispan via the HotRod protocol and caches SSO data into Infinispan.
+Specifically, WildFly configures `single-sign-on-management` using `hotrod-single-sign-on-management` to store SSO data into a `remote-cache-container` backed by Infinispan:
+
+```xml
+<subsystem xmlns="urn:jboss:domain:distributable-web:community:5.0">
+    ...
+    <single-sign-on-management default="other">
+        <hotrod-single-sign-on-management name="other" remote-cache-container="sso_data_cc"/>
+    </single-sign-on-management>
+    ...
+</subsystem>
+```
 
 ## Architecture
 

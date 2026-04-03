@@ -1,0 +1,1 @@
+# Using Form Authentication with WildFly and Infinispan

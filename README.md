@@ -1,8 +1,8 @@
 # Using Form Authentication with WildFly and Infinispan
 
-This project sets up a **2-node WildFly cluster** with a **2-node Infinispan/Data Grid cluster** as an external session store, using **Form-based authentication** and **Single Sign-On (SSO)** without TLS.
+This project sets up a **2-node WildFly/JBoss EAP cluster** with a **2-node Infinispan/Data Grid cluster** as an external session store, using **Form-based authentication** and **Single Sign-On (SSO)** without TLS.
 
-WildFly connects to Infinispan via the HotRod protocol using `remote-cache-container` for web session and EJB offloading, plus a second `remote-cache-container` (`sso_data_cc`) for SSO data.
+WildFly connects to Infinispan via the HotRod protocol and caches SSO data into Infinispan (WildFly configures `single-sign-on-management` using `hotrod-single-sign-on-management` to store SSO data into a `remote-cache-container` backed by Infinispan).
 
 ## Architecture
 
@@ -15,7 +15,7 @@ WildFly connects to Infinispan via the HotRod protocol using `remote-cache-conta
 
 ## Prerequisites
 
-- Java 17+
+- Java 17+ (Java 25+ when using `infinispan-server-16.1.3`)
 - Maven
 - WildFly zip (e.g. `wildfly-40.0.0.Beta1-*.zip`) in `$HOME/Downloads/`
 - Infinispan Server zip (e.g. `infinispan-server-16.1.3.zip`) in `$HOME/Downloads/`

@@ -1,6 +1,6 @@
 # Configure wildfly (SSO without TLS)
 
-export EAP_ZIP=$HOME/Downloads/jboss-eap-8.2.0.Alpha-CR10.zip
+export EAP_ZIP=$HOME/Downloads/jboss-eap-8.2.0.Alpha-CR34.zip
 export EAP_ZIP_ROOT="jboss-eap-8.2"
 
 rm -rdf jboss-eap-8.2-1
@@ -65,6 +65,9 @@ end-if
 if (outcome == success) of /subsystem=infinispan/remote-cache-container=sso_data_cc:read-attribute(name=marshaller)
 /subsystem=infinispan/remote-cache-container=sso_data_cc:write-attribute(name=marshaller,value=PROTOSTREAM)
 end-if
+/subsystem=logging/logger=org.wildfly.security:add(level=TRACE)
+/subsystem=logging/logger=org.jboss.security:add(level=TRACE)
+/subsystem=logging/logger=io.undertow.request.security:add(level=DEBUG)
 EOF
 
 cat <<EOF > $PWD/wildfly2.cli
@@ -95,7 +98,7 @@ end-if
 /subsystem=infinispan/cache-container=ejb/invalidation-cache=offload/component=transaction:add(mode=BATCH)
 /subsystem=infinispan/cache-container=ejb:write-attribute(name=default-cache, value=offload)
 /subsystem=elytron/filesystem-realm=clustering-realm:add(path=clustering-realm, relative-to=jboss.server.config.dir)
-/subsystem=elytron/security-domain=clustering-domain:add(default-realm=clustering-realm, permission-mapper=default-permission-mapper,realms=[{realm=clustering-realm, role-decoder=groups-to-roles}]
+/subsystem=elytron/security-domain=clustering-domain:add(default-realm=clustering-realm, permission-mapper=default-permission-mapper,realms=[{realm=clustering-realm, role-decoder=groups-to-roles}])
 /subsystem=elytron/filesystem-realm=clustering-realm:add-identity(identity=ssoUser)
 /subsystem=elytron/filesystem-realm=clustering-realm:set-password(identity=ssoUser, clear={password=ssoPassw})
 /subsystem=elytron/filesystem-realm=clustering-realm:add-identity-attribute(identity=ssoUser, name=groups, value=["User"])
@@ -121,6 +124,9 @@ end-if
 if (outcome == success) of /subsystem=infinispan/remote-cache-container=sso_data_cc:read-attribute(name=marshaller)
 /subsystem=infinispan/remote-cache-container=sso_data_cc:write-attribute(name=marshaller,value=PROTOSTREAM)
 end-if
+/subsystem=logging/logger=org.wildfly.security:add(level=TRACE)
+/subsystem=logging/logger=org.jboss.security:add(level=TRACE)
+/subsystem=logging/logger=io.undertow.request.security:add(level=DEBUG)
 EOF
 
 echo -e "\n=============================\nConfigure WF 1\n=============================\n\n"

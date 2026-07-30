@@ -1,6 +1,6 @@
 # Configure wildfly (SSO without TLS)
 
-export EAP_ZIP=$HOME/Downloads/jboss-eap-8.2.0.Alpha-CR34.zip
+export EAP_ZIP=$HOME/Downloads/jboss-eap-8.2.0.Beta-CR1.zip
 export EAP_ZIP_ROOT="jboss-eap-8.2"
 
 rm -rdf jboss-eap-8.2-1
